@@ -1,0 +1,197 @@
+Human chat icon
+hi
+
+AI chat icon
+Hello! To start the pronunciation test, please say 'yes'.
+
+Show trace
+Human chat icon
+yes
+
+AI chat icon
+Thank you for completing the test. Here is your final feedback:
+
+Pronunciation Score: 7/10 (Minor mispronunciations in some words)
+Fluency Assessment: Good (Minor issues with word pronunciation did not significantly impact fluency)
+Overall Performance: You showed good pronunciation skills with minor areas for improvement. Would you like to have another session?
+
+
+
+
+import logging
+from typing import Dict, Any
+from http import HTTPStatus
+import boto3
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
+def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
+    """
+    AWS Lambda handler for processing Bedrock agent requests.
+    
+    Args:
+        event (Dict[str, Any]): The Lambda event containing action details
+        context (Any): The Lambda context object
+    
+    Returns:
+        Dict[str, Any]: Response containing the action execution results
+    
+    Raises:
+        KeyError: If required fields are missing from the event
+    """
+    try:
+        action_group = event['actionGroup']
+        function = event['function']
+        message_version = event.get('messageVersion',1)
+        parameters = event.get('parameters', [])
+
+        # Execute your business logic here. For more information, 
+        # refer to: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-lambda.html
+
+        def greet(studentMessage):
+            return "Hello! I am your Personality test agent, type 'yes' to start session"
+
+        
+        """
+        start_session function logic flow
+        Flow of test with five sentences each from agent and get student spoken text and send to agent and get feedback
+        E.g: Flow
+        AI chat icon
+        Great! Please repeat the following sentence: 'The quick brown fox jumps over the lazy dog.'
+        Human chat:
+        the quick brown fox jump over the lazy dog
+
+        AI chat:
+        Thank you! There was a minor mispronunciation in 'jumps'. Now, please repeat this sentence: 'A stitch in time saves nine.'
+
+        Human chat:
+        a stitch in time save nine
+
+        AI chat:
+        Excellent! Now, please repeat this sentence: 'How much wood would a woodchuck chuck if a woodchuck could chuck wood?'
+
+        Human chat:
+        how much wood would a woodchuck chuck if a woodchuck could chuck woo
+
+        AI chat:
+        Great effort! There was a minor mispronunciation in 'woodchuck'. Now, please repeat this sentence: 'Pack my box with five dozen liquor jugs.'
+
+        Human chat:
+        packs my boxes with five dezons of liquor jugs
+
+        AI chat:
+        Almost there! There was a mispronunciation in 'dozens'. Now, please repeat this sentence: 'The five vines on the fence face each other.
+
+        Human chat:
+        the five vines on the fence each other
+        """
+
+        import boto3
+
+        def get_sentences(table_name='Pronunciation_test_sentences'):
+            dynamodb = boto3.client('dynamodb')
+            sentence = {}
+
+            # Scan the table
+            response = dynamodb.scan(TableName=table_name)
+            items = response.get('Items', [])
+
+            for item in items:
+                # Correct keys based on image structure
+                sl_no = item.get("Sl_No", {}).get("N")         # Sl_No is a number
+                text = item.get("sentence", {}).get("S")       # sentence is a string
+
+                if sl_no and text:
+                    sentence[sl_no] = {
+                        "Sl_No": {"N": sl_no},
+                        "sentence": {"S": text}
+                    }
+
+            print("Sentences in DB:", sentence)
+            return sentence
+
+
+
+        def start_session(studentreply, table_name='Pronunciation_test_sentences'):
+            if studentreply.strip().lower() == 'no':
+                return "Ok! When you are ready to test, come back. Bye!"
+
+            all_sentences = get_sentences(table_name)
+
+            if len(all_sentences) < 5:
+                return "Not enough sentences in the database to start a session."
+
+            # Randomly select five Sl_No keys
+            random_keys = random.sample(list(all_sentences.keys()), 5)
+
+            # Construct sessionSentences from selected keys
+            sessionSentences = { key: all_sentences[key] for key in random_keys }
+
+            print("Selected session sentences:", sessionSentences)
+            return sessionSentences
+
+
+        
+        
+        
+        
+        para_dict = {
+            param["name"].lower(): param["value"] for param in parameters
+        }
+        if function == 'greet':
+            studentMessage = para_dict.get('studentMessage')
+            response_body = {
+                'TEXT': {
+                    'body': greet(studentMessage)
+                }
+            }
+
+
+        elif function == 'start_session':
+            studentreply = para_dict.get('studentreply')
+            response_body = {
+                'TEXT':{
+                    'body':start_session(studentreply)
+                }
+            }
+
+
+        else:
+            response_body = {
+                'TEXT': {
+                    'body': 'Unknown function'
+                }
+            }
+
+
+
+
+
+        action_response = {
+            'actionGroup': action_group,
+            'function': function,
+            'functionResponse': {
+                'responseBody': response_body
+            }
+        }
+        response = {
+            'response': action_response,
+            'messageVersion': message_version
+        }
+
+        logger.info('Response: %s', response)
+        return response
+
+    except KeyError as e:
+        logger.error('Missing required field: %s', str(e))
+        return {
+            'statusCode': HTTPStatus.BAD_REQUEST,
+            'body': f'Error: {str(e)}'
+        }
+    except Exception as e:
+        logger.error('Unexpected error: %s', str(e))
+        return {
+            'statusCode': HTTPStatus.INTERNAL_SERVER_ERROR,
+            'body': 'Internal server error'
+        }
