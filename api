@@ -171,7 +171,6 @@ def provide_feedback_logic(event):
         f"📊 **Content ({content_score}/10):** You spoke {word_count} words in {sentence_count} sentences.\n\n"
         f"🎯 **Overall Rating:** {overall_rating}/10\n\n"
         f"💡 **Improvement Tip:** {specific_example}\n\n"
-        "Would you like to do another jam session? Type 'yes' or 'no'."
     )
     
     # Store Feedback in DynamoDB
