@@ -1,0 +1,19 @@
+{
+  "username": "balu",
+  "firstname": "R",
+  "lastname": "Balaji",
+  "gender": "Male",
+  "dob": "08-05-2004",
+  "personalemail": "rrbalaji2020@gmail.com",
+  "collegeemail": "22691a2828@mits.ac.in",
+  "phone": "9398350217",
+  "age": "20",
+  "collegename": "MITS",
+  "program":"betch",
+  "branch": "CST",
+  "year_of_study": "3rd",
+  "state_of_student": "AP",
+  "city": "Madanapalle",
+  "hobbies": "Reading,Writing",
+  "about": "Self"
+}
