@@ -1,19 +1,17 @@
+Status: Succeeded
+Test Event Name: test-sendprofile
+
+Response:
 {
-  "username": "balu",
-  "firstname": "R",
-  "lastname": "Balaji",
-  "gender": "Male",
-  "dob": "08-05-2004",
-  "personalemail": "rrbalaji2020@gmail.com",
-  "collegeemail": "22691a2828@mits.ac.in",
-  "phone": "9398350217",
-  "age": "20",
-  "collegename": "MITS",
-  "program":"betch",
-  "branch": "CST",
-  "year_of_study": "3rd",
-  "state_of_student": "AP",
-  "city": "Madanapalle",
-  "hobbies": "Reading,Writing",
-  "about": "Self"
+  "statusCode": 200,
+  "body": "{\"account_create_time\": \"05:34:08\", \"account_create_date\": \"2025-07-28\", \"state_of_student\": \"Andhra Pradesh\", \"personalemail\": \"22691a2828@mits.ac.in\", \"hobbies\": \"A,B,C\", \"year_of_study\": \"4th\", \"user_type\": \"free\", \"email\": \"22691a2828@mits.ac.in\", \"name\": \"R Balaji\", \"gender\": \"male\", \"city\": \"Madanapalle\", \"lastname\": \"Balaji\", \"collegename\": \"Madanapalle Institute of Technology & Science\", \"password\": \"123456\", \"program\": \"B.Tech\", \"about\": \"Hi, I am Balaji\", \"branch\": \"Computer Science and Technology\", \"dob\": \"2004-05-08\", \"firstname\": \"R\", \"username\": \"Balaji\", \"student_id\": \"41f03954-0379-4668-8006-a335c1ef3308\", \"phone\": \"9398350217\", \"age\": \"21\"}",
+  "headers": {
+    "Access-Control-Allow-Origin": "*"
+  }
+}
+
+
+
+{
+    "email": "22691a2828@mits.ac.in"
 }
