@@ -1,0 +1,24 @@
+EC2
+EC2 Instance Configuration for 100-200 Students
+Recommended Instance Type:
+t3.large (2 vCPU, 8 GB RAM) - Good starting point
+
+t3.xlarge (4 vCPU, 16 GB RAM) - Better for peak loads
+
+c5.xlarge (4 vCPU, 8 GB RAM) - CPU optimized for better performance
+
+Storage & Network:
+EBS Volume: 50-100 GB gp3 SSD
+
+Security Group: HTTP (80), HTTPS (443), SSH (22)
+
+Load Balancer: Application Load Balancer for high availability
+
+Estimated Pricing (Monthly)
+Component	Configuration	Cost (USD/month)
+EC2 t3.large	24/7 running	~$60
+EBS Storage	50 GB gp3	~$4
+Data Transfer	100 GB/month	~$9
+Load Balancer	ALB	~$16
+Total	~$89/month
+For t3.xlarge: ~$120/month total
