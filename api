@@ -1,1 +1,143 @@
-https://ndl.iitkgp.ac.in/cd_document/gate/gate/root
+Project name: One-Stop Career Advisor — Frontend
+
+Goal:
+Build a responsive, accessible React + TypeScript frontend for a student-facing web app. It must implement:
+- User authentication (sign up / login) with email + password (JWT-based backend assumed).
+- Student dashboard with profile summary and progress.
+- A multi-step interactive aptitude/interest test (quiz) that collects answers and stores progress locally while online/offline.
+- Submission of quiz results to a recommendation API endpoint and display of returned recommendations (courses, colleges, scholarships, loans, higher studies).
+- Simple admin view stub (read-only) for testing content updates.
+- Mobile-first UI and internationalization-ready strings (English as default).
+
+Tech stack & constraints:
+- React (v18+) with TypeScript.
+- Use functional components + hooks.
+- Styling: Tailwind CSS (no other CSS frameworks).
+- Routing: React Router.
+- Form handling: react-hook-form + yup validation.
+- State: React Context for auth + lightweight local store; use localStorage/IndexedDB (or localForage) for offline quiz progress.
+- No back-end implementation required — use the API endpoint placeholders below.
+- Provide a README with start/build/test commands.
+- Provide example unit tests (Jest + React Testing Library) for 2 components.
+- Provide clear file tree and implemented sample files: App.tsx, main routes, Auth context, Dashboard page, Quiz page, Recommendations page, a reusable Card component, and API service wrapper.
+
+Pages & behavior (exact):
+1. Landing page (/)
+   - Short app description and CTA: Sign Up / Login.
+
+2. Auth pages (/auth/register, /auth/login)
+   - Register collects: name, email, phone (optional), password, preferred language.
+   - Login returns JWT (simulate by storing a dummy token if backend unreachable).
+   - After login, redirect to /dashboard.
+
+3. Dashboard (/dashboard)
+   - Shows: student name, profile completeness % (based on fields filled), last quiz date, quick CTA to “Take Quiz” or “Continue Quiz”.
+   - Small widget showing top 1 recommended career (if available).
+   - Button to open Quiz, and link to Recommendations history.
+
+4. Quiz (/quiz)
+   - Multi-step quiz with progress bar.
+   - Each step shows 1–3 questions (MCQ with scores).
+   - Save progress locally after each step; allow “Resume later”.
+   - On final submit, POST quiz results to POST /api/quiz/submit and show loading + success state.
+   - If offline, store submission attempt and retry when online.
+
+5. Recommendations (/recommendations and /recommendations/:id)
+   - After successful quiz submit, show cards for top recommended streams/courses.
+   - Each card displays: course name, confidence score, short explanation, suggested local colleges (name + distance), scholarships (title + brief), and suggested next actions (apply, view college).
+   - A “Send to Email” and “Save to Profile” button (simulate behavior).
+
+6. Colleges (/colleges)
+   - List of nearby colleges returned from GET /api/colleges?lat=&lng=&radius=
+   - Map integration optional: show a small static map stub or embed (but provide component to add map later).
+
+7. Notifications (/notifications)
+   - Simple list of timeline items (admissions, scholarships, exams). Load from GET /api/notifications/:user_id.
+
+8. Admin stub (/admin)
+   - Read-only list of colleges and quiz questions (for demo).
+
+API endpoints (frontend should call these; if backend not available, mock them with local JSON):
+- POST /api/auth/register -> { user: {id,name,email,language}, token }
+- POST /api/auth/login -> { user, token }
+- GET /api/user/profile -> { user_profile }
+- PUT /api/user/profile -> updated profile
+- GET /api/quiz/questions -> returns array of questions (example JSON below)
+- POST /api/quiz/submit -> { recommendations: [...] }
+- GET /api/recommendations/:student_id -> list
+- GET /api/colleges?lat=&lng=&radius= -> list of college objects
+- GET /api/notifications/:user_id -> list
+
+Example quiz question JSON (use this format to build UI):
+{
+  "id": 1,
+  "question": "Do you enjoy solving math problems?",
+  "type": "single-choice",
+  "options": [
+    { "id": "a", "text": "Always", "score": 3 },
+    { "id": "b", "text": "Sometimes", "score": 2 },
+    { "id": "c", "text": "Rarely", "score": 1 }
+  ],
+  "category": "quantitative"
+}
+
+Example POST /api/quiz/submit input:
+{
+  "user_id": 101,
+  "answers": [
+    { "question_id": 1, "option_id": "a" },
+    { "question_id": 2, "option_id": "b" }
+  ],
+  "metadata": { "device": "web", "lang": "en" }
+}
+
+Example /api/quiz/submit response:
+{
+  "student_id": 101,
+  "recommendations": [
+    {
+      "id": "rec1",
+      "course": "B.Sc. Mathematics",
+      "confidence": 0.86,
+      "explanation": "High quantitative score and interest in problem solving.",
+      "careers": ["Data Analyst", "Research Assistant"],
+      "suggested_colleges": [
+         { "id": 1, "name": "Govt Degree College A", "distance_km": 6 }
+      ],
+      "scholarships": [
+         { "id": "sch1", "title": "State Merit Scholarship", "link": "#" }
+      ]
+    }
+  ]
+}
+
+Non-functional requirements:
+- Mobile-first, responsive, 320px to 1280px.
+- Accessibility: keyboard navigation, aria labels on interactive elements, alt text on images, focus indicators.
+- Internationalization: wrap visible strings for easy i18n.
+- Offline resilience: store quiz progress locally and retry submission when network returns.
+- Error handling: show user-friendly errors and retry buttons for failed API calls.
+
+Deliverables (explicit):
+1. Full React project scaffold (file tree + implemented files).
+2. Implemented pages/components listed above with working navigation and simulated API integration.
+3. README with how to run locally (npm install, npm start) and how to connect real backend endpoints.
+4. Two unit tests (one for QuizStepper, one for RecommendationCard).
+5. A short demo script describing how to test login -> quiz -> submit -> view recommendations.
+
+Additional instructions for the generator:
+- Keep code well-documented and modular.
+- Use TypeScript interfaces for API data shapes.
+- Use an API service module (api.ts) that centralizes fetch calls and handles token injection.
+- Provide mock data fallback when API returns 4xx/5xx or when running in demo mode.
+- Do not include any paid or proprietary libraries. Use only open-source packages.
+
+Return format:
+- Provide a downloadable code archive or a GitHub-style file tree with file contents for main files.
+- If full project is too large for one response, prioritize delivering:
+   1) App scaffold (package.json, tailwind config)
+   2) Auth context + sample auth pages
+   3) Quiz page + QuizStepper component
+   4) Recommendations page + RecommendationCard component
+   5) API service with mock mode
+   6) README
