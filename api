@@ -141,3 +141,8 @@ Return format:
    4) Recommendations page + RecommendationCard component
    5) API service with mock mode
    6) README
+
+
+
+
+https://8112eqras9.execute-api.ap-south-1.amazonaws.com/dev/team04_carrer_agent/send_history
