@@ -1,0 +1,308 @@
+Now its Time to build Practice Module
+
+
+
+read @Practice
+
+Unlock all make UI and data similar to @Test.jsx
+
+and 2 cards in a row
+
+
+
+to get Practices count (Remaining Practices) 
+
+do API call - https://ntjkr8rnd6.execute-api.ap-south-1.amazonaws.com/dev/student_profilecreate/student_profile_senddata
+
+request
+
+{
+
+    "college_email":"22691A2828@mits.ac.in"
+
+}
+
+Response:
+
+{
+
+  "statusCode": 200,
+
+  "headers": {
+
+    "Content-Type": "application/json",
+
+    "Access-Control-Allow-Origin": "*"
+
+  },
+
+  "body": "{\"college_email\": \"22691a2828@mits.ac.in\", \"full_name\": \"R Balaji\", \"roll_no\": \"22691a2828\", \"college_name\": \"MITS University\", \"tests\": {\"jam_test\": 2, \"image_speak\": 2, \"situation_test\": 0, \"listen_test\": 1, \"pronu_test\": 2}, \"practices\": {\"listen_practice\": 2, \"pronu_practice\": 1, \"image_speak_practice\": 1, \"situation_practice\": 2, \"jam_practice\": 2}, \"user_type\": \"premium\", \"premium_status\": \"active\", \"premium_plan\": \"monthly\", \"premium_start_date\": \"2026-01-19\", \"premium_expiry_date\": \"2026-02-18\", \"premium_days_left\": 25}"
+
+}
+
+
+
+To get averagescores and count of Practices
+
+do API call - https://piw6c7f4sf.execute-api.ap-south-1.amazonaws.com/dev/comm-practice-send-results
+
+
+
+request
+
+{
+
+    "college_email":"22691A2828@mits.ac.in"
+
+}
+
+
+
+response
+
+Status: Succeeded
+
+Test Event Name: test-case
+
+Response:
+
+{
+
+  "statusCode": 200,
+
+  "headers": {
+
+    "Content-Type": "application/json",
+
+    "Access-Control-Allow-Origin": "*"
+
+  },
+
+  "body": "{\"message\": \"Practice dashboard data fetched successfully\", \"dashboard\": {\"jam_practice\": {\"levels\": {\"basic\": {\"avgScore\": 4.8, \"attempts\": 1}, \"intermediate\": {\"avgScore\": 0.0, \"attempts\": 0}, \"advanced\": {\"avgScore\": 0.0, \"attempts\": 0}}, \"trend\": [{\"level\": \"basic\", \"score\": 4.8}]}, \"pronu_practice\": {\"levels\": {\"basic\": {\"avgScore\": 0.0, \"attempts\": 0}, \"intermediate\": {\"avgScore\": 0.0, \"attempts\": 0}, \"advanced\": {\"avgScore\": 0.0, \"attempts\": 0}}, \"trend\": []}, \"listen_practice\": {\"levels\": {\"basic\": {\"avgScore\": 0.0, \"attempts\": 0}, \"intermediate\": {\"avgScore\": 0.0, \"attempts\": 0}, \"advanced\": {\"avgScore\": 0.0, \"attempts\": 0}}, \"trend\": []}, \"situation_practice\": {\"levels\": {\"basic\": {\"avgScore\": 0.0, \"attempts\": 0}, \"intermediate\": {\"avgScore\": 0.0, \"attempts\": 0}, \"advanced\": {\"avgScore\": 0.0, \"attempts\": 0}}, \"trend\": []}}}"
+
+}
+
+
+
+
+
+
+
+Now create a BaseComponentPractice.jsx and Design UI and chatbod in a very attractive and user friendly, modern styles take reference @BaseComponent for Idea but make it more beautiful and attractive
+
+
+
+
+
+
+
+for AIgent API call - https://piw6c7f4sf.execute-api.ap-south-1.amazonaws.com/dev/comm-practice-ai-agent
+
+practices-types
+
+
+
+    "jam_practice": 
+
+    "pronu_practice": 
+
+    "listen_practice": 
+
+    "situation_practice":
+
+level - "basic"
+
+        "intermediate"
+
+        "advanced"
+
+
+
+
+
+practice-id format - test_type-test_level-7 random digits
+
+request example
+
+
+
+{
+
+  "body":{
+
+          "testType": "jam_practice",
+
+          "level": "intermediate",
+
+          "sessionId": "jam-intermediate-1234567",
+
+          "email": "22691a2828@mits.ac.in",
+
+          "message": "hi"
+
+  }
+
+}
+
+
+
+
+
+Status: Succeeded
+
+Test Event Name: test-case2
+
+Response:
+
+{
+
+  "statusCode": 200,
+
+  "headers": {
+
+    "Access-Control-Allow-Origin": "*",
+
+    "Access-Control-Allow-Headers": "Content-Type",
+
+    "Access-Control-Allow-Methods": "POST,OPTIONS"
+
+  },
+
+  "body": "{\"sessionId\": \"jam-intermediate-001\", \"email\": \"22691a2828@mits.ac.in\", \"testType\": \"jam_practice\", \"level\": \"intermediate\", \"aiResponse\": \"Hi! I\\u2019m Tara AI, and I\\u2019ll guide you through your Intermediate JAM speaking test.\\nYou\\u2019ll get two topics, select one topic and speak for one minute. Are you ready?\\nClick 'yes' or 'no'.\\n\"}"
+
+}
+
+
+
+
+
+FOR AUIDO (speech to text) use this API for all Practices
+
+https://ibxdsy0e40.execute-api.ap-south-1.amazonaws.com/dev/audiototranscript-api
+
+
+
+request
+
+
+
+{"body": "{\"data\": \"UklGRkaAEABXQVZFZm10IBAAAAABAAIAgLsAAADuAgAEABAATElTVBoAAAB////////////////////////////////////////+//7////////////+//7///////7//v////////////7//v////////////7//v//////////////////////////////////////////////////////////////////////AAAAAP////8AAAAAAAAAAAAAAAAAAAAA\"}", "isBase64Encoded": false}
+
+Status: Succeeded
+
+Test Event Name: test-case
+
+Response:
+
+{
+
+  "statusCode": 200,
+
+  "headers": {
+
+    "Content-Type": "application/json",
+
+    "Access-Control-Allow-Origin": "*",
+
+    "Access-Control-Allow-Headers": "Content-Type",
+
+    "Access-Control-Allow-Methods": "POST, OPTIONS"
+
+  },
+
+  "body": "{\"transcript\": \"Hello. Hi. My name is Balaji. How are you?\"}"
+
+}
+
+
+
+
+
+read @TestCompletionHandler.jsx similary update score and feeback, streak (for streak same API)
+
+
+
+API - sccore and Feedback - https://piw6c7f4sf.execute-api.ap-south-1.amazonaws.com/dev/comm-practice-feedback-update
+
+
+
+
+
+practices-types
+
+    "jam_practice": 
+
+    "pronu_practice": 
+
+    "listen_practice": 
+
+    "situation_practice":
+
+level - "basic"
+
+        "intermediate"
+
+        "advanced"
+
+
+
+test_id - generated for practice session (sessionId)
+
+
+
+use same sessionId for AI agent, feedback api, for entire test maintain one test_id means sessionId only here formating and all same as @TestCompletionHandler.jsx
+
+
+
+create one for Practice like PracticeCompletionHandler.jsx
+
+
+
+request 
+
+{
+
+  "college_email": "22691a2828@mits.ac.in",
+
+  "test_type": "jam_practice",
+
+  "test_level": "basic",
+
+  "test_id": "jam-basic-001",
+
+  "final_score": 4.8,
+
+  "ai_feedback": "Good clarity, logical flow, and confident delivery."
+
+}
+
+
+
+
+
+Response:
+
+{
+
+  "statusCode": 200,
+
+  "headers": {
+
+    "Access-Control-Allow-Origin": "*"
+
+  },
+
+  "body": "{\"message\": \"Practice result stored successfully\", \"test_id\": \"jam-basic-001\", \"level\": \"basic\", \"average_score\": 4.8, \"attempts\": 1}"
+
+}
+
+
+
+
+
+
+
+In Practice UI No Dashboards, No Leader boards show data there only of a particular Practice Reamining Practices, Average score, Trend graphs
+
+
+
