@@ -85,3 +85,11 @@ JAM_Topics_Database
 }
 
 
+{
+  "id": {
+    "S": "pronu-advanced-17651831"
+  },
+  "sentence": {
+    "S": "Financial awareness improves by tracking expenses with honesty and restraint"
+  }
+}
