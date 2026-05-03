@@ -1,0 +1,87 @@
+D1
+Image_Speak_Database
+
+{
+  "sessionId": {
+    "S": "image-speak-basic-01234567"
+  },
+  "descriprtion": {
+    "S": "Hello, this is my portfolio"
+  },
+  "image": {
+    "S": "https://image-speak-activiti-bucket.s3.ap-south-1.amazonaws.com/Image-Speak-Images/2612720412_28ef6b5d9c_z.jpg"
+  },
+  "level": {
+    "S": "basic"
+  }
+}
+
+D2
+
+Student_Communication_surveyData
+{
+  "college_email": {
+    "S": "25mra09040@mits.ac.in"
+  },
+  "action": {
+    "S": "survey"
+  },
+  "Communication_Goal": {
+    "S": "Improve overall English communication skills, public speaking"
+  },
+  "created_at": {
+    "S": "2026-04-01 15:51:03"
+  },
+  "English_Proficiency_Level": {
+    "S": "Beginner"
+  },
+  "Present_Level_of_English_Speaking": {
+    "S": "Beginner - I am not able to speak in English due to grammar difficulties."
+  },
+  "Reason_Why_not_Speaking_English": {
+    "S": "Feeling shy or embarrassed to speak in front of others"
+  },
+  "Speaking_in_English_Regularly": {
+    "S": "No"
+  },
+  "Time_Spent_to_Improve_Communication": {
+    "S": "Not spending any time"
+  }
+}
+
+D3
+Situation_Topics_Database
+
+{
+  "id": {
+    "S": "situation-basic-36887783"
+  },
+  "topic": {
+    "S": "You noticed that one of your classmates is being isolated in the classroom. What steps will you take to make them feel comfortable and included?"
+  }
+}
+
+
+D4
+Listening_SentencesDatabase
+{
+  "id": {
+    "S": "LISTEN49"
+  },
+  "sentence": {
+    "S": "Effective communication builds confidence."
+  }
+}
+
+D5
+JAM_Topics_Database
+{
+  "id": {
+    "S": "jam-basic-31928887"
+  },
+  "topic": {
+    "S": "How college helped me understand myself better"
+  }
+}
+
+
